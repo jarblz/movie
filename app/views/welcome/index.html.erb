@@ -1,0 +1,7 @@
+
+<h1>welcome movie ppl</h1>
+<%if user_signed_in?%>
+<%=link_to("new recommendation","welcome/recom")%>
+<%else%>
+<%=link_to("Sign in","users/sign_in")%>
+<%end%>
