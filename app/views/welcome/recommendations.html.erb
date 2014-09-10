@@ -1,1 +1,18 @@
-recs go here
+<ul>
+  <%x=0
+    @rex.each do |recommendation|
+  	x+=1%>
+    <li>Recommendation <%=x%>: </li>
+    <ul>
+        <li>
+          Title: <%=recommendation.title%>
+        </li>
+        <li>
+          Genre: <%=recommendation.genre%>
+        </li>
+        <li>
+          Recommended By: <%=User.where(id: recommendation.user_id).take.email%>
+        </li>
+    </ul>
+</ul>
+    <%end%>

@@ -10,6 +10,6 @@ class WelcomeController < ApplicationController
   def recom
   end
   def recommendations
-
+    @rex=Recommendations.all
   end
 end
