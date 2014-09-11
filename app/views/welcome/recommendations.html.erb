@@ -1,18 +1,16 @@
-<ul>
-  <%x=0
-    @rex.each do |recommendation|
-  	x+=1%>
-    <li>Recommendation <%=x%>: </li>
-    <ul>
-        <li>
-          Title: <%=recommendation.title%>
-        </li>
-        <li>
-          Genre: <%=recommendation.genre%>
-        </li>
-        <li>
-          Recommended By: <%=User.where(id: recommendation.user_id).take.email%>
-        </li>
-    </ul>
-</ul>
-    <%end%>
+<div class="list-group" style="width:600px; background-color:yellow">
+     
+     <%x=0
+   @rex.each do |recommendation|
+   x+=1%>
+   <% movie_id = Tmdb::Movie.find(recommendation.title).first.id %>
+   <% movie_details = Tmdb::Movie.detail(movie_id) %>
+ <aclass="list-group-item active">
+   <b>Recommendation <%=x%>:</b>
+ </a>
+ <a href="https://www.themoviedb.org/movie/<%=Tmdb::Movie.find(recommendation.title).first.id %>" target ="_blank"class="list-group-item" style="color: blue">Title: <%=recommendation.title%></a>
+ <a class="list-group-item">Genre: <%= movie_details.genres.first.name %></a>
+ <a class="list-group-item">Rating: <%= movie_details.vote_average %></a>
+ <a href="https://www.themoviedb.org/movie/<%=Tmdb::Movie.find(recommendation.title).first.id %>" target ="_blank" class="list-group-item">Poster: <img src="http://image.tmdb.org/t/p/w154/<%=Tmdb::Movie.find(recommendation.title).first.poster_path%>" ></a>
+ <a class="list-group-item">Recommended By: <%=User.where(id: recommendation.user_id).take.email%></a>
+ <%end%>
