@@ -1,13 +1,27 @@
 <h1>Recommendation Submission</h1>
-
-
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+   Sort By
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="recom?sort=popular">Popular</a></li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="recom?sort=top">Top Rated</a></li>
+  </ul>
+</div>
 <form action = "add_recom" method="POST">
-	<input type="text" id="title" name="title">
-		Title
-	</field>
-	<input type="text" id="genre" name="genre">
-		genre
-	</field>
-	<input type="submit">
 	<input name='authenticity_token' type='hidden' value='<%=form_authenticity_token%>'	/>
+	<%if @filter=='popular'%>
+	<%Tmdb::Movie.popular.take(15).each do |movie|%>
+	<input type="radio" name="title" value="<%=movie.title%>"/>Title: <%=movie.title%> Rating:<%=movie.vote_average%><br>
+	<%end%>
+	<%elsif @filter=='top'%>
+	<%Tmdb::Movie.top_rated.take(15).each do |movie|%>
+	<input type="radio" name="title" value="<%=movie.title%>"/>Title: <%=movie.title%> Rating:<%=movie.vote_average%><br>
+	<%end%>
+    <%end%>
+<%=@filter%>
+	<input type="submit">
+
 </form>

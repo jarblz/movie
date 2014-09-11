@@ -8,6 +8,7 @@ class WelcomeController < ApplicationController
   	redirect_to :action => 'recommendations'
   end
   def recom
+    @filter = params['sort']
   end
   def recommendations
     @rex=Recommendations.all
